@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
+    <title>AR動画再生アプリ</title>
+    <!-- CSS -->
+    <link rel="stylesheet" href="./assets/style.css">
+    <!-- ライブラリ -->
+    <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+    <script src="https://rawgit.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
+    <script src="https://unpkg.com/aframe-chromakey-material/dist/aframe-chromakey-material.min.js"></script>
+    <!-- js -->
+    <script src="./assets/script.js"></script>
+  </head>
+
+  <body>
+    <a-scene
+      vr-mode-ui="enabled: false;"
+      renderer="logarithmicDepthBuffer: true; gammaOutput: true;"
+      embedded
+      arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;"
+    >
+      <a-assets>
+        <video
+          id="myvideo"
+          muted
+          playsinline
+          crossorigin="anonymous"
+          loop="true"
+          src="./assets/video.mp4"
+          preload="metadata"
+        ></video>
+      </a-assets>
+
+      <a-marker
+        type="pattern" 
+        url="./assets/marker.patt" 
+        id="marker"
+      >
+        <a-entity
+          play-video="video: #myvideo; canstop: false;"
+          geometry="primitive: plane; width: 4; height: 3"
+          scale="1 1 1"
+          position="1 0 0"
+          rotation="-30 0 0"
+        ></a-entity>
+      </a-marker>
+
+      <a-light type="ambient" color="#ffffff"></a-light>
+      <a-entity camera></a-entity>
+    </a-scene>
+  </body>
+</html>
