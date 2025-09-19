@@ -456,7 +456,10 @@ class ARLoadingManager {
         this.animationManager.updateStatus('カメラアクセスを要求中...');
         
         navigator.mediaDevices.getUserMedia({ video: true })
-            .then(() => {
+            .then((stream) => {
+                if (!stream || !stream.getVideoTracks().length) {
+                    this.errorHandler.handleCameraError(error);
+                }
                 this.logger.log('カメラアクセス許可取得');
                 this.animationManager.updateProgress(60);
                 this.initializeAR();
