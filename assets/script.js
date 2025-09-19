@@ -269,6 +269,10 @@ class ErrorHandler {
                 errorInfo.message = 'カメラの設定に問題があります。';
                 errorInfo.details = '要求された設定がデバイスでサポートされていません。';
                 break;
+            case 'AbortError':
+                errorInfo.message = 'カメラアクセスが中止されました。';
+                errorInfo.details = 'ユーザーが操作を中止した可能性があります。';
+                break;
         }
 
         this.logError(errorInfo);
@@ -459,6 +463,7 @@ class ARLoadingManager {
             .then((stream) => {
                 if (!stream || !stream.getVideoTracks().length) {
                     this.errorHandler.handleCameraError(error);
+
                 }
                 this.logger.log('カメラアクセス許可取得');
                 this.animationManager.updateProgress(60);
